@@ -18,7 +18,7 @@ async function uiInit() {
     if (d.data.Abi.length > 0) {
       _abi = JSON.parse(JSON.stringify(d.data.Abi))
       _chainId = d.data.ChainId
-      _chainRpc = d.data.ChainRpc
+      _currentNetwork = d.data.ChainRpc
       _scanAddr = d.data.Scan
       $('#contractName').html('当前合约信息 - ' + d.data.Name + ':')
       $('#contract').html(d.data.Addr)
@@ -90,6 +90,7 @@ function _initUiComponents() {
 // loads a new contract into the page, downloads its ABI and generates all UI
 async function _loadContract(contractAddress) {
   try {
+    // console.log(_currentNetwork)
     const abi = await dataFetchAbi(contractAddress, _currentNetwork);
     dataInitializeContractInstance(contractAddress, _currentNetwork, abi);
     _mainError();
@@ -156,7 +157,7 @@ function _generateUiForAbi(abi) {
 
 // populate the UI for a single contract function
 function _addUiForFunctionField(field, toSelector) {
-  console.log(field)
+  // console.log(field)
   const functionEl = $('#templates > #abi-function').clone();
   $(toSelector).append(functionEl);
   $(functionEl).find('[data-tpl=name]').text(field.name + ' / ' + field.cnName);
@@ -241,7 +242,7 @@ function _appendOutputFunctionArg(fieldArg, outputValue, functionEl, functionArg
   } else if (fieldArg.type === 'bool') {
     $(functionArgEl).find('[data-tpl=input]').parent().wrap(`<a target="blank" style="color:#F00" href="${_getTxLinkForAddress(outputValue)}"></a>`);
   }
-  console.log(fieldArg.type, "-----")
+  // console.log(fieldArg.type, "-----")
   $(functionArgEl).slideDown(100);
 }
 
@@ -278,7 +279,7 @@ function _appendOutputFunctionError(errorMessage, functionEl) {
 
 // get the URL for etherscan for exploring an Ethereum/BSC address further
 function _getLinkForAddress(address) {
-  return _scanAddr + `${address}`;
+  return _scanAddr + `address/${address}`;
 }
 
 function _getTxLinkForAddress(address) {

@@ -22,7 +22,7 @@ function dataEncodeFunctionSignature(abiField, network) {
 }
 
 function dataInitializeContractInstance(contractAddress, network, abi) {
-
+  console.log(network)
   _contractInstance = new (_getWeb3(network).eth.Contract)(abi, contractAddress);
   _contractInstance.address = contractAddress
 }
@@ -61,6 +61,7 @@ function dataValidateType(type, value) {
 }
 
 function _getWeb3(network) {
+  console.log(network)
   return new Web3(network);
 }
 
