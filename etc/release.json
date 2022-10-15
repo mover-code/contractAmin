@@ -1,0 +1,26 @@
+{
+    "debug": false,
+    "index": "/",
+    "prefix": "admin",
+    "sql_log": false,
+    "language": "cn",
+    "database": {
+        "default": {
+            "max_idle_con": 50,
+            "max_open_con": 150,
+            "file": "./admin.db",
+            "driver": "sqlite"
+        }
+    },
+    "store": {
+        "path": "./uploads",
+        "prefix": "uploads"
+    },
+    "access_log": "./logs/access.log",
+    "error_log": "./logs/error.log",
+    "info_log": "./logs/info.log",
+    "access_assets_log_off": true,
+    "theme": "adminlte",
+    "bootstrap_file_path": "./bootstrap.go",
+    "color_scheme": "skin-black"
+}

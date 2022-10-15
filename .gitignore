@@ -1,0 +1,9 @@
+.idea
+.vscode
+build
+vendor/**
+!vendor/vendor.json
+local.mk
+build
+logs/**
+!.gitkeep

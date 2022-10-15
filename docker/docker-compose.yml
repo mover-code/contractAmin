@@ -1,0 +1,26 @@
+version: '3.5'
+# 网络配置
+networks:
+  backend:
+    driver: bridge
+
+# 服务容器配置
+services:
+  golang:
+    # 自定义容器名称
+    container_name: admin
+    build:
+      context: ./golang # 指定构建使用的 Dockerfile 文件
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      # 设置挂载目录
+      - /home/q-admin:/usr/src/code # 引用 .env 配置中 CODE_PATH_HOST 变量，将宿主机上代码存放的目录挂载到容器中 /usr/src/code 目录
+    ports:
+      # 设置端口映射
+      - "9001:9001"
+    stdin_open: true # 打开标准输入，可以接受外部输入
+    tty: true
+    networks:
+      - backend
+    restart: always # 指定容器退出后的重启策略为始终重启

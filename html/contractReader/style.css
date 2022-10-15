@@ -1,0 +1,12 @@
+body {
+  font-family: apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji !important;
+}
+
+#main-menu.ui.secondary.menu .active.item {
+  background: #2185d030;
+}
+
+.ui.pinkish.label, .ui.pinkish.labels .label {
+  background-color: #d0219320!important;
+  border-color: #d0219320!important;
+}

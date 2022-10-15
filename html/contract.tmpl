@@ -1,0 +1,111 @@
+<div class="ui container" style="padding: 50px;width: 100%;text-align: left;">
+    <h5 style="margin-top: 20px;">
+      当前钱包地址:
+      <span id="addr" style="margin-left: 1%; margin-right: 2%;"></span>
+      当前链id:
+      <span id="chain" style="margin-left: 1%;"></span>
+    </h5>
+    <div id="contract-loaded" style="margin-top: 1rem; display: none;">
+      <div id="abi-fields" style="margin-top: 2rem; padding-bottom: 2rem;">
+        <div id="main-menu" class="ui secondary menu" style="margin-bottom: 2.5rem;">
+          <a class="item active" data-target="menu-read-functions" href="#read">Read Functions</a>
+          <a class="item" data-target="menu-write-functions" href="#write">Write Functions</a>
+          <!-- <a class="item" data-target="menu-events" href="#events">Events</a>
+          <a class="item" data-target="menu-storage" href="#storage">Storage</a> -->
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div class="ui mini labeled input" style="margin-right: 0.8rem;">
+            <div class="ui label">Block number</div>
+            <input id="input-block-number" type="text" placeholder="latest">
+          </div>
+          <div class="ui mini labeled input">
+            <div class="ui label">Caller address</div>
+            <input id="input-caller-address" type="text" placeholder="default" style="width: 310px;">
+          </div>
+        </div>
+        <div id="menu-read-functions" class="main-menu-content">
+          <h5>Read functions:</h5>
+          <div id="abi-read-functions"></div>
+        </div>
+        <div id="menu-write-functions" class="main-menu-content" style="display: none;">
+          <h5>Write functions (simulate):</h5>
+          <div id="abi-write-functions"></div>
+        </div>
+        <div id="menu-events" class="main-menu-content" style="display: none;">
+          <h5>Events:</h5>
+          <div id="abi-events"></div>
+        </div>
+        <div id="menu-storage" class="main-menu-content" style="display: none;">
+          <h5>Storage:</h5>
+          <div id="abi-storage"></div>
+        </div>
+      </div>
+    </div>
+    <div id="main-error" class="ui secondary inverted red segment" style="display: none;">
+      <p>Example error.</p>
+    </div>
+  </div>
+  <div id="templates" style="display: none;">
+    <!-- template -->
+    <div id="abi-function" class="ui styled accordion" style="margin: 0.5rem;">
+      <div class="title"><i class="dropdown icon"></i><span data-tpl="name">functionName</span>
+        <div data-tpl="signature" class="ui horizontal pinkish label" style="float: right; width: 90px;">0x123</div>
+      </div>
+      <div class="content" style="padding-bottom: 0.5rem;">
+        <div data-tpl="inputs"></div>
+        <button data-tpl="query" class="tiny ui button" style="margin-bottom: 1rem;">Query</button>
+        <div data-tpl="outputs"></div>
+      </div>
+    </div>
+    <!-- template -->
+    <div id="function-arg" style="display: flex; margin-bottom: 0.5rem;">
+      <label data-tpl="name" style="margin-right: auto;">inputName</label>
+      <div class="ui mini right labeled input" style="width: 360px;">
+        <input type="text" spellcheck="false" data-tpl="input" placeholder="">
+        <div class="ui label">
+          <div data-tpl="type" class="text">type</div>
+        </div>
+      </div>
+    </div>
+    <!-- template -->
+    <div id="function-arg-decimals" style="display: flex; margin-bottom: 0.5rem;">
+      <label data-tpl="name" style="margin-right: auto;">inputName</label>
+      <div class="ui mini right labeled input" style="width: 360px;">
+        <input type="text" spellcheck="false" data-tpl="input" placeholder="">
+        <div data-tpl="decimals" class="ui dropdown label">
+          <div data-tpl="type" class="text">type</div>
+          <i class="dropdown icon"></i>
+          <div data-tpl="menu" class="menu">
+            <div class="item selected" data-value="0">type</div>
+            <div class="item" data-value="18">type(18)</div>
+            <div class="item" data-value="12">type(12)</div>
+            <div class="item" data-value="10">type(10)</div>
+            <div class="item" data-value="8">type(8)</div>
+            <div class="item" data-value="6">type(6)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- template -->
+    <div id="function-arg-error" class="ui mini secondary inverted red segment" style="margin-bottom: 0.5rem;">
+      <p data-tpl="text">Example error.</p>
+    </div>
+  </div>
+  <script>
+    uiInit();
+  </script>
+
+<style>
+body {
+  font-family: apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji !important;
+}
+
+#main-menu.ui.secondary.menu .active.item {
+  background: #2185d030;
+}
+
+.ui.pinkish.label, .ui.pinkish.labels .label {
+  background-color: #d0219320!important;
+  border-color: #d0219320!important;
+}
+</style>

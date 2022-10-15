@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/accordion.min.css"
+    integrity="sha512-BIyIsOFJCQKKhxrCMtXBi1RJTXmV1vuMEWCRbU/UFieuYyvGAbl03GktViTWKM39yu9Jywbec1V0cRbQ6KgMVQ=="
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+    integrity="sha512-U6K1YLIFUWcvuw5ucmMtT9HH4t0uz3M366qrF5y4vnyH6dgDzndlcGvH/Lz5k8NFh80SN95aJ5rqGZEdaQZ7ZQ=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.5/web3.min.js"
+    integrity="sha512-S/O+gH5szs/+/dUylm15Jp/JZJsIoWlpSVMwT6yAS4Rh7kazaRUxSzFBwnqE2/jBphcr7xovTQJaopiEZAzi+A=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+    integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/accordion.min.js"
+    integrity="sha512-zy/iMxvOAQO5VsB1/enNUXKWxoSBFAyjXwwwIU+sMYf2+iOnqoW2EokpAnnTwue6/Kcv3w7qyALGbppj3mOVgA=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/8.0.2/bignumber.min.js"
+    integrity="sha512-7UzDjRNKHpQnkh1Wf1l6i/OPINS9P2DDzTwQNX79JxfbInCXGpgI1RPb3ZD+uTP3O5X7Ke4e0+cxt2TxV7n0qQ=="
+    crossorigin="anonymous"></script>
+  <script src="./data.js"></script>
+  <script src="./ui.js"></script>
+  <title>CDF Contract Admin</title>
+</head>
+
+<body>
+  <div class="ui container">
+    <h3 style="margin-top: 20px;">
+      当前钱包地址:
+    </h3>
+    <span id="addr" class="ui label" style="margin-left: 1%; margin-right: 2%;"></span>
+    <h3 style="margin-top: 20px;">
+
+      当前链id:
+    </h3>
+
+    <span id="chain" class="ui label" style="margin-left: 1%;"></span>
+    <div style="margin-top: 30px;">
+      <!-- <div class="ui right labeled input" style="margin-top: 1rem; margin-right: 0.8rem;">
+        <input id="contract-address" type="text" spellcheck="false" placeholder="Contract address"
+          style="width: 380px;">
+        <div id="contract-network" class="ui dropdown label">
+          <div class="text">Ethereum</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item selected" data-value="ethereum">Ethereum</div>
+            <div class="item" data-value="bsc">BSC</div>
+          </div>
+        </div>
+      </div>
+      <button id="load-contract" class="ui primary button"
+        style="vertical-align: top; margin-top: 1.1rem;">Load</button> -->
+      <h4>说明:</h4>
+      <p>1.红色代表输出,当内容为地址或哈希时可以点击跳转至区块浏览器查看!</p>
+      <p>2.确保当前钱包链id与网页显示链id一致,地址一致!</p>
+    </div>
+    <div id="contract-loaded" style="margin-top: 1rem; display: none;">
+      <div id="abi-fields" style="margin-top: 2rem; padding-bottom: 2rem;">
+        <div id="main-menu" class="ui secondary menu" style="margin-bottom: 2.5rem;">
+          <a class="item active" data-target="menu-read-functions" href="#read">Read Functions / 读取合约</a>
+          <a class="item" data-target="menu-write-functions" href="#write">Write Functions / 上链数据</a>
+          <!-- <a class="item" data-target="menu-events" href="#events">Events</a>
+          <a class="item" data-target="menu-storage" href="#storage">Storage</a> -->
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div class="ui mini labeled input" style="margin-right: 0.8rem;">
+            <div class="ui label">Block number / 区块高度</div>
+            <input id="input-block-number" type="text" placeholder="latest">
+          </div>
+          <div class="ui mini labeled input">
+            <div class="ui label">Caller address / 调用合约地址</div>
+            <input id="input-caller-address" type="text" placeholder="default" style="width: 310px;">
+          </div>
+        </div>
+        <div id="menu-read-functions" class="main-menu-content">
+          <h5>Read functions / 读取合约方法:</h5>
+          <div id="abi-read-functions"></div>
+        </div>
+        <div id="menu-write-functions" class="main-menu-content" style="display: none;">
+          <h5>Write functions (simulate) / 写入合约方法:</h5>
+          <div id="abi-write-functions"></div>
+        </div>
+        <div id="menu-events" class="main-menu-content" style="display: none;">
+          <h5>Events:</h5>
+          <div id="abi-events"></div>
+        </div>
+        <div id="menu-storage" class="main-menu-content" style="display: none;">
+          <h5>Storage:</h5>
+          <div id="abi-storage"></div>
+        </div>
+      </div>
+    </div>
+    <div id="main-error" class="ui secondary inverted red segment" style="display: none;">
+      <p>Example error.</p>
+    </div>
+  </div>
+  <div id="templates" style="display: none;">
+    <!-- template -->
+    <div id="abi-function" class="ui styled accordion" style="margin: 0.5rem;">
+      <div class="title"><i class="dropdown icon"></i><span data-tpl="name">functionName</span>
+        <div data-tpl="signature" class="ui horizontal pinkish label" style="float: right; width: 90px;">0x123</div>
+      </div>
+      <div class="content" style="padding-bottom: 0.5rem;">
+        <div data-tpl="inputs"></div>
+        <button data-tpl="query" class="tiny ui button" style="margin-bottom: 1rem;">Query</button>
+        <div data-tpl="outputs"></div>
+      </div>
+    </div>
+    <!-- template -->
+    <div id="function-arg" style="display: flex; margin-bottom: 0.5rem;">
+      <label data-tpl="name" style="margin-right: auto;">inputName</label>
+      <div class="ui mini right labeled input" style="width: 360px;">
+        <input type="text" style="color:#f00" spellcheck="false" data-tpl="input" placeholder="">
+        <div class="ui label">
+          <div data-tpl="type" class="text">type</div>
+        </div>
+      </div>
+    </div>
+    <!-- template -->
+    <div id="function-arg-decimals" style="display: flex; margin-bottom: 0.5rem;">
+      <label data-tpl="name" style="margin-right: auto;">inputName</label>
+      <div class="ui mini right labeled input" style="width: 360px;">
+        <input type="text" spellcheck="false" data-tpl="input" placeholder="">
+        <div data-tpl="decimals" class="ui dropdown label">
+          <div data-tpl="type" class="text">type</div>
+          <i class="dropdown icon"></i>
+          <div data-tpl="menu" class="menu">
+            <div class="item selected" data-value="0">type</div>
+            <div class="item" data-value="18">type(18)</div>
+            <div class="item" data-value="12">type(12)</div>
+            <div class="item" data-value="10">type(10)</div>
+            <div class="item" data-value="8">type(8)</div>
+            <div class="item" data-value="6">type(6)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- template -->
+    <div id="function-arg-error" class="ui mini secondary inverted red segment" style="margin-bottom: 0.5rem;">
+      <p data-tpl="text">Example error.</p>
+    </div>
+  </div>
+  <script>
+    window.onload = uiInit;
+  </script>
+</body>
+
+</html>
