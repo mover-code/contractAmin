@@ -160,7 +160,16 @@ function _addUiForFunctionField(field, toSelector) {
   // console.log(field)
   const functionEl = $('#templates > #abi-function').clone();
   $(toSelector).append(functionEl);
-  $(functionEl).find('[data-tpl=name]').text(field.name + ' / ' + field.cnName);
+  if (field.cnName == undefined) {
+    $(functionEl).find('[data-tpl=name]').text(field.name);
+  } else {
+    $(functionEl).find('[data-tpl=name]').text(field.name + ' / ' + field.cnName);
+  }
+  if (toSelector == '#abi-read-functions') {
+    $(functionEl).find('[data-tpl=query]').text('查询')
+  } else {
+    $(functionEl).find('[data-tpl=query]').text('执行')
+  }
   $(functionEl).find('[data-tpl=signature]').text(dataEncodeFunctionSignature(field, _currentNetwork));
   $(functionEl).find('[data-tpl=query]').click(field, _queryFunctionOnClick);
   for (let i = 0; i < field.inputs.length; i++) {
@@ -179,22 +188,35 @@ async function _queryFunctionOnClick(event) {
   try {
     // read call contract
     if (event.data.stateMutability == "view") {
-      const result = await dataQueryFunction(field, inputArray);
-      for (let i = 0; i < field.outputs.length; i++) {
-        const outputValue = result; // todo fix for multiple
-        const functionArgEl = _getElementForFunctionArg(field.outputs[i]);
-        _appendOutputFunctionArg(field.outputs[i], outputValue, functionEl, functionArgEl);
+      let result = await dataQueryFunction(field, inputArray);
+      console.log(typeof (result), result.length)
+      if (typeof (result) == 'string') {
+        result = [result]
       }
-
-    } else {
-      const result = await dataWriteFunction(field, inputArray);
       for (let i = 0; i < field.outputs.length; i++) {
         const outputValue = result; // todo fix for multiple
         const functionArgEl = _getElementForFunctionArg(field.outputs[i]);
-        _appendOutputFunctionArg(field.outputs[i], outputValue, functionEl, functionArgEl);
+        if (field.outputs.length > 1) {
+          _appendOutputFunctionArg(field.outputs[i], outputValue[i], functionEl, functionArgEl);
+        } else {
+          _appendOutputFunctionArg(field.outputs[i], outputValue, functionEl, functionArgEl);
+        }
+      }
+    } else {
+      let result = await dataWriteFunction(field, inputArray);
+      if (typeof (result) == 'string') {
+        result = [result]
+      }
+      for (let i = 0; i < field.outputs.length; i++) {
+        const outputValue = result; // todo fix for multiple
+        const functionArgEl = _getElementForFunctionArg(field.outputs[i]);
+        if (field.outputs.length > 1) {
+          _appendOutputFunctionArg(field.outputs[i], outputValue[i], functionEl, functionArgEl);
+        } else {
+          _appendOutputFunctionArg(field.outputs[i], outputValue, functionEl, functionArgEl);
+        }
       }
     }
-
   } catch (e) {
     _appendOutputFunctionError(e.message, functionEl);
   }
@@ -233,6 +255,7 @@ function _appendInputFunctionArg(fieldArg, functionEl, functionArgEl) {
 
 // populate the UI for a single function argument for output
 function _appendOutputFunctionArg(fieldArg, outputValue, functionEl, functionArgEl) {
+  // console.log("----", outputValue, "--------", fieldArg)
   $(functionArgEl).hide();
   $(functionEl).find('[data-tpl=outputs]').append(functionArgEl);
   $(functionArgEl).find('[data-tpl=input]').val(outputValue);
