@@ -1,11 +1,11 @@
 package tables
 
 import (
-    "github.com/GoAdminGroup/go-admin/context"
-    "github.com/GoAdminGroup/go-admin/modules/db"
-    "github.com/GoAdminGroup/go-admin/plugins/admin/modules/table"
-    "github.com/GoAdminGroup/go-admin/template/types"
-    "github.com/GoAdminGroup/go-admin/template/types/form"
+	"github.com/GoAdminGroup/go-admin/context"
+	"github.com/GoAdminGroup/go-admin/modules/db"
+	"github.com/GoAdminGroup/go-admin/plugins/admin/modules/table"
+	"github.com/GoAdminGroup/go-admin/template/types"
+	"github.com/GoAdminGroup/go-admin/template/types/form"
 )
 
 // GetContract.
@@ -18,6 +18,7 @@ func GetContract(ctx *context.Context) (contractTable table.Table) {
 
     info := contractTable.GetInfo()
     info.AddField("ID", "id", db.Int).FieldSortable()
+    info.AddField("合约名称", "name", db.Varchar)
     info.AddField("合约地址", "addr", db.Varchar).FieldDisplay(
         func(model types.FieldModel) interface{} {
             // href := `<a class="btn btn-sm btn-primary grid-refresh" href="/admin/dao?contract=` + model.Value + `"><i class="fa fa-play"></i> ` + model.Value + `</a>`
@@ -33,11 +34,12 @@ func GetContract(ctx *context.Context) (contractTable table.Table) {
 
     formList := contractTable.GetForm()
     formList.AddField("ID", "id", db.Int, form.Default).FieldNotAllowEdit().FieldNotAllowAdd()
+    formList.AddField("合约名称","name", db.Varchar, form.Text)
     formList.AddField("合约地址", "addr", db.Varchar, form.Text)
-    formList.AddField("rpc", "chainRpc", db.Varchar, form.Text)
-    formList.AddField("scan", "scan", db.Varchar, form.Text)
+    formList.AddField("rpc", "chainRpc", db.Varchar, form.Text).FieldDefault("https://bsc.mytokenpocket.vip")
+    formList.AddField("scan", "scan", db.Varchar, form.Text).FieldDefault("https://bscscan.com/")
     formList.AddField("abi", "abi", db.Varchar, form.Text)
-    formList.AddField("链id", "chainId", db.Varchar, form.Text)
+    formList.AddField("链id", "chainId", db.Varchar, form.Text).FieldDefault("56")
 
     formList.SetTable("contracts").SetTitle("智能合约编辑").SetDescription("智能合约")
 

@@ -11,6 +11,7 @@ type Contract struct {
     Abi      string
     Scan     string
     ChainId  string `gorm:"column:chainId"`
+    Name     string
 }
 
 func FirstContract() *Contract {

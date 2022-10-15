@@ -20,6 +20,8 @@ async function uiInit() {
       _chainId = d.data.ChainId
       _chainRpc = d.data.ChainRpc
       _scanAddr = d.data.Scan
+      $('#contractName').html('当前合约信息 - ' + d.data.Name + ':')
+      $('#contract').html(d.data.Addr)
       _loadContract(params.contract);
       login();
     } else {

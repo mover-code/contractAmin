@@ -1,0 +1,5 @@
+2022-10-15T10:53:39.423+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
+2022-10-15T10:53:49.199+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract/edit
+2022-10-15T10:54:03.758+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m POST   [0m /admin/edit/contract
+2022-10-15T10:54:05.783+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
+2022-10-15T10:54:41.765+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
