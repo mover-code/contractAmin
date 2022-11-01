@@ -203,7 +203,7 @@ async function _queryFunctionOnClick(event) {
         }
       }
     } else {
-      let result = await dataWriteFunction(field, inputArray);
+      let result = await dataWriteFunction(_currentNetwork, field, inputArray);
       if (typeof (result) == 'string') {
         result = [result]
       }

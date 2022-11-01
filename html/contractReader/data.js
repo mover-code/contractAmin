@@ -22,7 +22,7 @@ function dataEncodeFunctionSignature(abiField, network) {
 }
 
 function dataInitializeContractInstance(contractAddress, network, abi) {
-  console.log(network)
+  // console.log(network)
   _contractInstance = new (_getWeb3(network).eth.Contract)(abi, contractAddress);
   _contractInstance.address = contractAddress
 }
@@ -31,8 +31,12 @@ async function dataQueryFunction(abiField, inputs, blockNumber, from) {
   return _contractInstance.methods[abiField.name](...inputs).call();
 }
 
-async function dataWriteFunction(abiField, inputs, blockNumber, from) {
+async function dataWriteFunction(network, abiField, inputs, blockNumber, from) {
   // console.log(abiField.name, _contractInstance.address)
+  // .estimateGas({
+  //   from: this.address
+  // })
+  var status = 0
   const transactionParameters = {
     from: $("#addr").text(),
     to: _contractInstance.address,
@@ -40,10 +44,19 @@ async function dataWriteFunction(abiField, inputs, blockNumber, from) {
     // custom gas price
   };
 
-  return ethereum.request({
-    method: 'eth_sendTransaction',
-    params: [transactionParameters],
-  });
+  await _getWeb3(network).eth.estimateGas(transactionParameters).catch(err => {
+    // let leftitle = 'error';
+    if (err.message) {
+      alert(err.message)
+      status = 1
+    }
+  })
+  if (status == 0) {
+    return ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters],
+    })
+  }
 }
 
 function dataValidateType(type, value) {
@@ -61,7 +74,7 @@ function dataValidateType(type, value) {
 }
 
 function _getWeb3(network) {
-  console.log(network)
+  // console.log(network)
   return new Web3(network);
 }
 
