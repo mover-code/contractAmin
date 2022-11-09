@@ -139,7 +139,7 @@ function _generateUiForAbi(abi) {
     for (let i = 0; i < abi.length; i++) {
       const field = abi[i];
       if (field.type === 'function') {
-        if (field.stateMutability === 'view') {
+        if (field.stateMutability === 'view' || field.stateMutability == 'pure') {
           _addUiForFunctionField(field, '#abi-read-functions');
         } else {
           _addUiForFunctionField(field, '#abi-write-functions');
@@ -181,15 +181,16 @@ function _addUiForFunctionField(field, toSelector) {
 // event handler when user clicks the "Query" button of a function to execute a function call
 async function _queryFunctionOnClick(event) {
   const field = event.data;
+
   const functionEl = $(event.delegateTarget).parent();
   $(functionEl).find('[data-tpl=outputs]').empty();
   const inputArray = _validateQueryInputArray(field, functionEl);
   if (!Array.isArray(inputArray)) return;
   try {
     // read call contract
-    if (event.data.stateMutability == "view") {
+    if (event.data.stateMutability == "view" || event.data.stateMutability == "pure") {
       let result = await dataQueryFunction(field, inputArray);
-      console.log(typeof (result), result.length)
+      // console.log(typeof (result), result.length)
       if (typeof (result) == 'string') {
         result = [result]
       }
@@ -276,7 +277,27 @@ function _validateQueryInputArray(field, functionEl) {
   let error = false;
   $(functionEl).find('[data-tpl=inputs]').find('[data-tpl=input]').each((i, inputEl) => {
     const fieldArg = field.inputs[i];
-    const inputValue = $(inputEl).data('rawVal') || $(inputEl).val();
+    var inputValue = $(inputEl).data('rawVal') || $(inputEl).val();
+
+    // console.log('------', field.inputs[i].type, inputValue, typeof (inputValue), field.inputs[i].type.search("[]"))
+    if (field.inputs[i].type.search("[]") == -1) {
+      var inputParam = new Array()
+      array = Array.from(inputValue)
+      var info = ""
+      var invalidStr = ["[", "'", '"']
+      for (var i = 0; i < array.length; i++) {
+        if (!invalidStr.includes(array[i])) {
+          if (array[i] == "," || array[i] == "]") {
+            inputParam.push(info)
+            info = ''
+          } else {
+            info += array[i]
+          }
+        }
+      }
+      inputValue = inputParam
+    }
+
     try {
       dataValidateType(fieldArg.type, inputValue);
     } catch (e) {

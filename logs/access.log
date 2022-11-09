@@ -13,3 +13,12 @@
 2022-10-15T13:56:14.904+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
 2022-10-15T14:10:04.346+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
 2022-10-15T14:12:51.550+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
+2022-11-01T14:43:31.146+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/login
+2022-11-01T14:43:34.970+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/login
+2022-11-01T14:43:43.644+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m POST   [0m /admin/signin
+2022-11-01T14:43:46.369+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
+2022-11-01T14:43:53.643+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract/new
+2022-11-01T14:45:10.996+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m POST   [0m /admin/new/contract
+2022-11-01T14:45:13.552+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
+2022-11-01T14:45:37.470+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
+2022-11-01T14:48:00.221+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract/edit
