@@ -270,8 +270,13 @@ function _appendOutputFunctionArg(fieldArg, outputValue, functionEl, functionArg
   $(functionArgEl).slideDown(100);
 }
 
-// validate all input arguments and show error UI before executing a function call
-// returns array if the inputs are valid, false if not
+/**
+ * It takes a field object and a function element, and returns an array of validated inputs
+ * 
+ * Args:
+ *   field: The field object from the function's JSON file.
+ *   functionEl: The element that contains the function.
+ */
 function _validateQueryInputArray(field, functionEl) {
   const inputArray = [];
   let error = false;
@@ -280,7 +285,7 @@ function _validateQueryInputArray(field, functionEl) {
     var inputValue = $(inputEl).data('rawVal') || $(inputEl).val();
 
     // console.log('------', field.inputs[i].type, inputValue, typeof (inputValue), field.inputs[i].type.search("[]"))
-    if (field.inputs[i].type.search("[]") == -1) {
+    if (field.inputs[i].type.indexOf("[]") != -1) {
       var inputParam = new Array()
       array = Array.from(inputValue)
       var info = ""
@@ -297,7 +302,6 @@ function _validateQueryInputArray(field, functionEl) {
       }
       inputValue = inputParam
     }
-
     try {
       dataValidateType(fieldArg.type, inputValue);
     } catch (e) {

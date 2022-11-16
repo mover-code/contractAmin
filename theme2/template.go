@@ -66,7 +66,7 @@ var List = map[string]string{"login": `{{define "login"}}
         <div class="row" style="padding-top: 60px; clear: both;">
             <div class="col-md-12 text-center">
                 <p>
-                    <small>&copy; All Rights Reserved. CDF</small>
+                    <small>&copy; All Rights Reserved.</small>
                 </p>
             </div>
         </div>
