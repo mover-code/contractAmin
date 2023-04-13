@@ -47,34 +47,7 @@ type (
 func (d Deposit) Parse() {
 	d.UsdtNum = web3.FWei(d.UsdtNum)
 	d.FaNum = web3.FWei(d.FaNum)
-	// 	amount := new(big.Int).Mul(d.UsdtNum, big.NewInt(2))
-	// 	u := models.FirstFaUser()
-	// 	u.User = d.User.String()
-	// 	u.Amount = amount.String()
-	// 	u.UId = d.Inviter.String()
-	// 	u.Insert()
-	// 	uId := u.FindByAddr(u.UId)
-	// 	var upUser models.FaUser
-	// Loop:
-	// 	for {
-	// 		upUser.FindById(uId)
-	// 		// fmt.Println("上级", upUser)
-	// 		if upUser.Id > 0 {
-	// 			old, b := new(big.Int).SetString(upUser.TeamAmount, 0)
-	// 			if b {
-	// 				upUser.TeamAmount = new(big.Int).Add(amount, old).String()
-	// 			} else {
-	// 				upUser.TeamAmount = amount.String()
-	// 			}
-	// 			upUser.Update()
-	// 			uId = upUser.FindByAddr(upUser.UId)
-	// 			if uId == 0 {
-	// 				break Loop
-	// 			}
-	// 		} else {
-	// 			break Loop
-	// 		}
-	// 	}
+	fmt.Println("deposit event info: ", d.FaNum, d.FaNum, "----")
 }
 
 // It creates a new client for the given url.
@@ -203,9 +176,10 @@ func (d *MyContract) GetLogs(name ...interface{}) {
 // The above code is a function that is used to get the history logs of a contract.
 func (d *MyContract) GetHistoryLogs(start int64, name ...interface{}) {
 	f := d.NewFilter(name...)
-
 	stop := false
 	block := NowBlock()
+	fmt.Println("start catch history logs : now block is ", block)
+
 	for {
 		time.Sleep(time.Second)
 		if start < int64(block) {
@@ -221,7 +195,7 @@ func (d *MyContract) GetHistoryLogs(start int64, name ...interface{}) {
 			f.SetToUint64(uint64(newBlock))
 
 			logs, err := w3.Eth().GetLogs(f)
-			// fmt.Println(fmt.Sprintf("catch logs length %v;blockNum:from[%v]-to[%v] ----", len(logs), start, newBlock), err)
+			fmt.Println(fmt.Sprintf("catch logs length %v;blockNum:from[%v]-to[%v] ----", len(logs), start, newBlock), err)
 			if err == nil && len(logs) > 0 {
 				// fmt.Println(fmt.Sprintf("catch logs length %v;blockNum:from[%v]-to[%v] ----", len(logs), start, newBlock))
 				for _, l := range logs {
@@ -239,7 +213,7 @@ func (d *MyContract) GetHistoryLogs(start int64, name ...interface{}) {
 }
 
 var (
-	w3         = NewCli("https://bsc-dataseed3.defibit.io")
+	w3         = NewCli("https://rpc-bsc.48.club")
 	DepositAbi = `[
 	{
 		"inputs": [

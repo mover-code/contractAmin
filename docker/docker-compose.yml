@@ -4,7 +4,7 @@ networks:
   backend:
     driver: bridge
 
-# 服务容器配置
+# 服务容器配置    此容器需要进入容器内部手动启动服务
 services:
   golang:
     # 自定义容器名称
@@ -15,9 +15,9 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       # 设置挂载目录
-      - /home/q-admin:/usr/src/code # 引用 .env 配置中 CODE_PATH_HOST 变量，将宿主机上代码存放的目录挂载到容器中 /usr/src/code 目录
+      - /home/文件存放地址  :/usr/src/code # 引用 .env 配置中 CODE_PATH_HOST 变量，将宿主机上代码存放的目录挂载到容器中 /usr/src/code 目录
     ports:
-      # 设置端口映射
+      # 设置端口映射 可自由配置
       - "9001:9001"
     stdin_open: true # 打开标准输入，可以接受外部输入
     tty: true
