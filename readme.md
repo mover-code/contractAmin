@@ -54,4 +54,10 @@ go run main.go -f etc/config.json -p port
 5. pages 页面扩展
 6. tables 数据管理
 7. docker 容器部署 目前只有进入容器启动服务版本
-  
+
+---
+![示例图](uploads/pic1.png)
+
+---
+
+![图2](uploads/pic2.png)

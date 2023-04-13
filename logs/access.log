@@ -84,3 +84,4 @@
 2023-04-13T18:19:01.793+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/site/edit
 2023-04-13T18:19:03.213+0800	controller/handler.go:24	[GoAdmin] [37;44m 302 [0m [37;104m GET   [0m /admin/info/site
 2023-04-13T18:19:03.279+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/site/edit
+2023-04-13T18:25:57.243+0800	controller/handler.go:24	[GoAdmin] [37;44m 200 [0m [37;104m GET   [0m /admin/info/contract
