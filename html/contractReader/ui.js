@@ -251,6 +251,9 @@ function _appendInputFunctionArg(fieldArg, functionEl, functionArgEl) {
   if (fieldArg.type === 'uint256') {
     placeholder = 'unsigned decimal';
   }
+  if (fieldArg.type === 'bool'){
+    placeholder = 'ture or false';
+  }
   $(functionArgEl).find('[data-tpl=input]').attr('placeholder', placeholder);
 }
 
@@ -301,6 +304,14 @@ function _validateQueryInputArray(field, functionEl) {
         }
       }
       inputValue = inputParam
+    }
+    if (fieldArg.type === 'bool'){
+      console.log("yyyydddddssss",fieldArg.type,inputValue)
+      if (inputValue == 'true'){
+          inputValue = true
+      }else{
+          inputValue = false
+      }
     }
     try {
       dataValidateType(fieldArg.type, inputValue);
